@@ -6,8 +6,8 @@
 import {colorToInt, intToColor} from "../internal-functions";
 import {MSRawCue} from "../raw";
 import {MSCueTypeEnum,MSIntColor,MSScheduledPlaybackTypeEnum,MSSplittingOptionsTypeEnum} from "../types";
-import {MSObject,MSObjectProperties} from "./MSObject";
-import {MSPage} from "./MSPage"
+import {MSObject,MSObjectProperties} from "./Object";
+import {MSPage} from "./Page"
 
 /** Represents the properties of an `MSCue`. */
 class MSCueProperties extends MSObjectProperties {

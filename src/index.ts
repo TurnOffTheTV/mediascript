@@ -3,7 +3,7 @@
  * @author TurnOffTheTV <turnoffthetv@turnoffthetv.xyz>
  */
 
-import {MSScript} from "./script/MSScript"
+import {MSScript} from "./script/Script"
 //import JSZip from "jszip";
 
 /**

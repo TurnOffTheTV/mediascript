@@ -5,7 +5,7 @@
 
 import {MSPageTransitionId} from "./types"
 
-/** Raw Script. */
+/** Raw script. */
 export interface MSRawScript {
 	Id: string,
 	Version: string,
@@ -30,13 +30,33 @@ export interface MSRawScript {
 		}
 	},
 	Cues: Array<MSRawCue>
-	KeyObjectsPage: Object,
-	AudioPlayer: Object,
+	KeyObjectsPage: MSRawKeyObjectsPage,
+	AudioPlayer: MSRawAudioPlayerModel,
 	VersionCreated: string,
 	VersionUpdated: string
 }
 
-/** Raw Cue. */
+/** Raw key objects page. */
+export interface MSRawKeyObjectsPage {
+	Id: string,
+	Version: string,
+	readonly TypeId: "KeyObjectsPage",
+	Properties: {},
+	Items: Array<any>
+	VisualLayers: Array<any>
+	VisualItems: Array<any>
+}
+
+/** Raw audio player. */
+export interface MSRawAudioPlayerModel {
+	Id: string,
+	Version: string,
+	readonly TypeId: "AudioPlayerModel",
+	Properties: {},
+	AudioPlayLists: []
+}
+
+/** Raw cue. */
 export interface MSRawCue {
 	Id: string,
 	Version: string,

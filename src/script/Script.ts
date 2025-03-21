@@ -4,8 +4,8 @@
  */
 
 import {MSRawScript} from "../raw";
-import {MSCue} from "./MSCue";
-import {MSObject,MSObjectProperties} from "./MSObject";
+import {MSCue} from "./Cue";
+import {MSObject,MSObjectProperties} from "./Object";
 
 /** Represents the properties of an `MSScript`. */
 class MSScriptProperties extends MSObjectProperties {

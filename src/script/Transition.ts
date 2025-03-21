@@ -5,7 +5,7 @@
 
 import {MSRawPageTransition, MSRawPageTransitionStoryboard} from "../raw";
 import {MSTransitionDirectionEnum} from "../types";
-import {MSObject,MSObjectProperties} from "./MSObject";
+import {MSObject,MSObjectProperties} from "./Object";
 
 /** Represents the properties of an `MSPageStoryboard`. */
 class MSPageStoryboardProperties extends MSObjectProperties {

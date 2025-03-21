@@ -4,8 +4,8 @@
  */
 
 import {MSRawPage, MSRawStagePageModel} from "../raw";
-import {MSObject,MSObjectProperties} from "./MSObject"
-import {MSPageStoryboard} from "./MSTransition"
+import {MSObject,MSObjectProperties} from "./Object"
+import {MSPageStoryboard} from "./Transition"
 
 /** Represents the properties of an `MSPage`. */
 class MSPageProperties extends MSObjectProperties {
