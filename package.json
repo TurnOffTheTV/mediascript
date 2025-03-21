@@ -1,0 +1,32 @@
+{
+  "name": "mediascript",
+  "version": "1.0.0",
+  "description": "TypeScript library for interfacing with MediaShout 7 sc7x files",
+  "main": "dist/index.js",
+  "type": "commonjs",
+  "scripts": {
+    "build": "tsc --build",
+    "clean": "tsc --build --clean",
+    "test": "node test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TurnOffTheTV/mediascript.git"
+  },
+  "keywords": [
+    "MediaShout",
+    "TypeScript"
+  ],
+  "author": "TurnOffTheTV",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/TurnOffTheTV/mediascript/issues"
+  },
+  "homepage": "https://github.com/TurnOffTheTV/mediascript#readme",
+  "dependencies": {
+    "jszip": "^3.10.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.1"
+  }
+}
