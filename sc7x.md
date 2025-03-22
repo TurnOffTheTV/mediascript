@@ -24,13 +24,14 @@ The assets are copied straight from the hard drive, and they will have the same 
 
 ## `scriptModel.json`
 
-`scriptModel.json` contains the structure of the script. Read the code (particularly interfaces.ts and classes.ts) for an in-depth look at how everything is put together, but most of it makes sense.
+`scriptModel.json` contains the structure of the script. If you have a solid understanding of MediaShout's features, reading the file shouldn't be too hard.
 
-Text on slides is stored in a rich text format. TODO: figure this out
+Text on slides is stored as rich text format, and so can be edited with any program that supports RTF files.
 
 Colors are stored as little-endian 32-bit signed integers. Each byte of the integer represents one color channel, for R,G,B, and A.
 
 ## Interesting Notes
 
-TODO: What happens if you flip the order of the zip and the thumbnail?
-TODO: What happens if you remove the padding byte.
+MediaShout orders the file with the thumbnail data first and the ZIP afterwards, but it will accept a script file with those two flipped, as long as the values in the header reflect the change.
+
+TODO: test removing the null padding byte
