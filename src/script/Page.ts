@@ -4,7 +4,7 @@
  */
 
 import {MSRawPage,MSRawStagePageModel} from "../raw";
-import {MSVisualItem, MSVisualItemText} from "./Item";
+import {MSVisualItem,MSVisualItemText,MSVisualItemVideo} from "./Item";
 import {MSObject,MSObjectProperties} from "./Object";
 import {MSPageStoryboard} from "./Transition";
 
@@ -92,6 +92,9 @@ export class MSPage extends MSObject {
 					case "VisualItem+Text":
 						this.items.push(new MSVisualItemText(json.Items[i]));
 					break;
+					case "VisualItem+Video":
+						this.items.push(new MSVisualItemVideo(json.Items[i]));
+					break;
 				}
 			}
 
@@ -121,10 +124,10 @@ export class MSPage extends MSObject {
 			Items: items,
 			VisualLayers: [],
 			VisualItems: visualItems,
-			Storyboard: {},
+			Storyboard: this.storyboard,
 			Transition: this.transition,
-			StagePage: {},
-			AudioItems: []
+			StagePage: this.stagePage,
+			AudioItems: this.audioItems
 		}
 	}
 }
@@ -177,12 +180,12 @@ export class MSStagePage extends MSObject {
 			Version: this.version,
 			TypeId: "StagePageModel",
 			Properties: this.properties,
-			Items: [],
+			Items: this.items,
 			VisualLayers: [],
 			VisualItems: [],
-			Storyboard: {},
+			Storyboard: this.storyboard,
 			Transition: this.transition,
-			AudioItems: []
+			AudioItems: this.audioItems
 		}
 	}
 }

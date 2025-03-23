@@ -33,10 +33,19 @@ export type MSVerticalAlignmentEnum = "top" | "center" | "bottom" | "stretch";
 /** Enum for text item type. */
 export type MSTextItemTypeEnum = 0;
 
+/** Enum for fast positioning state. */
+export type MSFastPositioningStateEnum = 2;
+
 /** Color representation that will be turned into an int. */
 export interface MSIntColor {
 	r: number;
 	g: number;
 	b: number;
 	a: number;
+}
+
+/** Drawing size representation that will be turned into a [System.Drawing.Size](https://learn.microsoft.com/en-us/dotnet/api/system.drawing.size). */
+export interface MSDrawingSize {
+	width: number;
+	height: number;
 }

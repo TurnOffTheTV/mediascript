@@ -3,7 +3,7 @@
  * @author TurnOffTheTV <turnoffthetv@turnoffthetv.xyz>
  */
 
-import {MSRawObjectTransition, MSRawPageTransition, MSRawPageTransitionStoryboard} from "../raw";
+import {MSRawObjectTransition, MSRawObjectTransitionStoryboard, MSRawPageTransition, MSRawPageTransitionStoryboard} from "../raw";
 import {MSTransitionDirectionEnum} from "../types";
 import {MSObject,MSObjectProperties} from "./Object";
 
@@ -44,13 +44,34 @@ export class MSPageStoryboard extends MSObject {
 		super();
 
 		if(json && json.TypeId==="PageTransitionStoryboard"){
-			//Set main properties
+			//Set main properties.
 			this.id=json.Id;
 			this.version=json.Version;
 
-			//Set properties properties
+			//Set properties properties.
 			this.properties.duration=json.Properties.Duration.$value;
 			this.properties.direction=json.Properties.Direction.$value;
+
+			//Set other properties.
+			this.duration=json.Duration;
+
+			//Set up transition object.
+			switch(json.Transition.TypeId){
+				case "PageTransition+None":
+					this.transition=new MSPageTransitionNone(json.Transition);
+				break;
+			}
+		}
+	}
+
+	toJSON(){
+		return {
+			Id: this.id,
+			Verion: this.version,
+			TypeId: "PageTransitionStoryboard",
+			Properties: this.properties,
+			Duration: this.duration,
+			Transition: this.transition
 		}
 	}
 }
@@ -142,6 +163,47 @@ export class MSVisualItemStoryboard extends MSObject {
 	delay: string;
 	/** The storyboard's visual item transition object. */
 	transition: MSVisualItemTransition;
+
+	constructor(json?: MSRawObjectTransitionStoryboard){
+		super();
+
+		if(json && json.TypeId==="ObjectTransitionStoryboard"){
+			//Set main properties.
+			this.id=json.Id;
+			this.version=json.Version;
+
+			//Set properties properties.
+			this.properties.duration=json.Properties.Duration.$value;
+			this.properties.direction=json.Properties.Direction.$value;
+			this.properties.delay=json.Properties.Delay.$value;
+			this.properties.stepsOffset=json.Properties.StepsOffset.$value;
+
+			//Set other properties
+			this.duration=json.Duration;
+			this.stepsOffset=json.StepsOffset;
+			this.delay=json.Delay;
+			
+			//Set up transition object.
+			switch(json.Transition.TypeId){
+				case "ObjectTransition+None":
+					this.transition=new MSVisualItemTransitionNone(json.Transition);
+				break;
+			}
+		}
+	}
+
+	toJSON(){
+		return {
+			Id: this.id,
+			Version: this.version,
+			TypeId: "ObjectTransitionStoryboard",
+			Properties: this.properties,
+			Duration: this.duration,
+			StepsOffset: this.stepsOffset,
+			Delay: this.delay,
+			Transition: this.transition
+		}
+	}
 }
 
 /** Base visual item transition class. */
@@ -168,6 +230,15 @@ export class MSVisualItemTransitionNone extends MSVisualItemTransition {
 
 			//Set properties properties
 			this.properties={};
+		}
+	}
+
+	toJSON(){
+		return {
+			Id: this.id,
+			Version: this.version,
+			TypeId: "ObjectTransition+None",
+			Properties: this.properties
 		}
 	}
 }
