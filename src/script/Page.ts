@@ -3,9 +3,10 @@
  * @author TurnOffTheTV <turnoffthetv@turnoffthetv.xyz>
  */
 
-import {MSRawPage, MSRawStagePageModel} from "../raw";
-import {MSObject,MSObjectProperties} from "./Object"
-import {MSPageStoryboard} from "./Transition"
+import {MSRawPage,MSRawStagePageModel} from "../raw";
+import {MSVisualItem, MSVisualItemText} from "./Item";
+import {MSObject,MSObjectProperties} from "./Object";
+import {MSPageStoryboard} from "./Transition";
 
 /** Represents the properties of an `MSPage`. */
 class MSPageProperties extends MSObjectProperties {
@@ -51,11 +52,9 @@ export class MSPage extends MSObject {
 	/** Properties of the page. */
 	properties: MSPageProperties = new MSPageProperties();;
 	/** The page's items. */
-	items: Array<any>;
+	items: Array<MSVisualItem>;
 	/** `VisualLayers` (use unknown) */
 	visualLayers: Array<any>;
-	/** `VisualItems` (use unknown) */
-	visualItems: Array<any>;
 	/** `Storyboard` (use unknown) */
 	storyboard: MSPageStoryboard;
 	/** `Transition` (values unknown) */
@@ -87,18 +86,41 @@ export class MSPage extends MSObject {
 			this.properties.autoAdvanceItem=json.Properties.AutoAdvanceItemId;
 			this.properties.additionalInfo=json.Properties.AdditionalInfo;
 
+			//Set up items
+			for(let i=0;i<json.Items.length;i++){
+				switch(json.Items[i].TypeId){
+					case "VisualItem+Text":
+						this.items.push(new MSVisualItemText(json.Items[i]));
+					break;
+				}
+			}
+
+			//Set other properties
+			this.storyboard=new MSPageStoryboard(json.Storyboard);
+			this.transition=json.Transition;
+			this.stagePage=new MSStagePage(json.StagePage);
 		}
 	}
 
 	toJSON(){
+		let items = [];
+		let visualItems = [];
+
+		for(let i=0;i<this.items.length;i++){
+			items.push(this.items[i].toJSON());
+			items[i].$id=(i+1).toString();
+			items[i].$type="polino.persistence.Models.VisualItem, polino.persistence";
+			visualItems.push({$ref: (i+1).toString()})
+		}
+
 		return {
 			Id: this.id,
 			Version: this.version,
 			TypeId: "Page",
 			Properties: this.properties,
-			Items: [],
+			Items: items,
 			VisualLayers: [],
-			VisualItems: [],
+			VisualItems: visualItems,
 			Storyboard: {},
 			Transition: this.transition,
 			StagePage: {},

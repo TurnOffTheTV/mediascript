@@ -37,7 +37,7 @@ class MSCueProperties extends MSObjectProperties {
 	source: string;
 	/** `Content` (use unknown) */
 	content: Object;
-	/** Type of scheduled playback. (values unknown) */
+	/** Type of scheduled playback. */
 	scheduledPlaybackType: MSScheduledPlaybackTypeEnum;
 	/** Date/time to play this cue. */
 	scheduledPlaybackTime: Date;
@@ -142,6 +142,10 @@ export class MSCue extends MSObject {
 			this.properties.additionalInfo=json.Properties.AdditionalInfo;
 			this.properties.wasWrapped=json.Properties.WasWrapped;
 
+			//Set up pages
+			for(let i=0;i<json.Pages.length;i++){
+				this.pages.push(new MSPage(json.Pages[i]));
+			}
 		}
 	}
 

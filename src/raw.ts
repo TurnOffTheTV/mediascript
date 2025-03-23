@@ -107,9 +107,9 @@ export interface MSRawCue {
 	Pages: Array<MSRawPage>,
 	MainAppliedTemplate: null,
 	StageAppliedTemplate: null,
-	MainBackgroundItem: null,
-	StageBackgroundItem: null,
-	BackgroundAudioItem: null,
+	MainBackgroundItem: MSRawVisualItem | null,
+	StageBackgroundItem: MSRawVisualItem | null,
+	BackgroundAudioItem: MSRawVisualItem | null,
 	KeyDataObjectsPage: Object
 }
 
@@ -126,7 +126,7 @@ export interface MSRawPage {
 		IsSkipped: boolean,
 		IsPinned: boolean,
 		AutoAdvanceTime: {
-			$type: "System.Int32, mscorlib",
+			readonly $type: "System.Int32, mscorlib",
 			$value: number
 		},
 		AutoAdvanceItemId: null | string,
@@ -167,9 +167,14 @@ export interface MSRawPageTransition {
 	TypeId: MSPageTransitionId,
 	Properties: {
 		Duration: {
-			$type: "System.TimeSpan, mscorlib",
+			readonly $type: "System.TimeSpan, mscorlib",
 			$value: string
-		}
+		},
+		Origin?: {
+			readonly $type: "polino.enums.FlyInOrigin, polino.enums" | "polino.enums.TickerOrigin, polino.enums" | "polino.enums.ZoomOrigin, polino.enums",
+			$value: 0 | 1
+		},
+		OriginZoom?: number
 	}
 }
 
@@ -216,24 +221,44 @@ export interface MSRawVisualItem {
 		Angle: number,
 		IsLocked: boolean,
 		IsVisible: boolean,
-		Text: string,
-		Type: {
+		Text?: string,
+		Type?: {
 			readonly $type: "polino.model.Enums.TextItemType, polino.model",
 			$value: 0
 		}
-		Description: string,
-		LinkedId: string,
-		LinkedPosition: {
-			$type: "System.Int32, mscorlib",
+		Description?: string,
+		LinkedId?: string,
+		LinkedPosition?: {
+			readonly $type: "System.Int32, mscorlib",
 			$value: number
 		},
-		SeparatedPosition: {
-			$type: "System.Int32, mscorlib",
+		SeparatedPosition?: {
+			readonly $type: "System.Int32, mscorlib",
 			$value: number
 		},
-		Snapshot: string,
-		HasPageBreak: boolean,
-		HasParagraph: boolean
+		Snapshot?: string,
+		HasPageBreak?: boolean,
+		HasParagraph?: boolean,
+		Identifier?: string,
+		Source?: string,
+		OriginalSource?: string,
+		InitialSize?: {
+			readonly $type: "System.Drawing.Size, System.Drawing",
+			$value: string
+		},
+		FastPositioningState?: {
+			readonly $type: "polino.model.Enums.FastPositioningState, polino.model",
+			$value: 2
+		},
+		Rate?: {
+			readonly $type: "System.Single, mscorlib",
+			$value: number
+		},
+		ThumbnailSource?: string,
+		Volume?: {
+			readonly $type: "System.Int32, mscorlib",
+			$value: number
+		}
 	},
 	Effects: Array<MSRawEffect>
 	Storyboard: MSRawObjectTransitionStoryboard
@@ -271,13 +296,31 @@ export interface MSRawEffect {
 		OutlineThickness?: number,
 		ShadowAngle?: number,
 		ShadowOffset?: number,
-		ShadowBlurRadius: {
+		ShadowBlurRadius?: {
 			readonly $type: "System.Int32, mscorlib",
 			$value: number
 		},
-		VerticalAlignment: {
+		VerticalAlignment?: {
 			readonly $type: "System.Windows.VerticalAlignment, PresentationFramework",
 			$value: 0 | 1 | 2 | 3
+		},
+		BlurRadius?: {
+			readonly $type: "System.Int32, mscorlib",
+			$value: number
+		},
+		Offset?: number,
+		Angle?: number,
+		IsEnabled?: boolean,
+		Radius?: number,
+		HueOffset?: number,
+		SaturationAdjust?: number,
+		ContrastAdjust?: number,
+		BrightnessAdjust?: number,
+		StartPosition?: number,
+		EndPosition?: number,
+		PlayTimes?: {
+			readonly $type: "System.Int32, mscorlib",
+			$value: number
 		}
 	}
 }
@@ -301,7 +344,7 @@ export interface MSRawObjectTransitionStoryboard {
 			$value: string
 		},
 		StepsOffset: {
-			$type: "System.UInt32, mscorlib",
+			readonly $type: "System.UInt32, mscorlib",
 			$value: number
 		}
 	},
