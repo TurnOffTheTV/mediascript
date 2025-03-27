@@ -3,8 +3,11 @@
  * @author TurnOffTheTV <turnoffthetv@turnoffthetv.xyz>
  */
 
+import {MSAudioPlayer} from "./Audio"
 import {MSRawScript} from "../raw";
+import {MSCueTypeEnum} from "../types";
 import {MSCue} from "./Cue";
+import {MSKeyObjectsPage} from "./KeyObjects";
 import {MSObject,MSObjectProperties} from "./Object";
 
 /** Represents the properties of an `MSScript`. */
@@ -55,6 +58,11 @@ export class MSScript extends MSObject {
 	/** The script's cues. */
 	cues: Array<MSCue> = [];
 
+	/** Page for key objects. */
+	keyObjectsPage: MSKeyObjectsPage = new MSKeyObjectsPage();
+	/** `AudioPlayer` (use unknown) */
+	audioPlayer: MSAudioPlayer = new MSAudioPlayer();
+
 	/** The MediaShout version this script was created. */
 	versionCreated: string = "7.0.0.0";
 	/** The last MediaShout version this script was edited in. */
@@ -91,7 +99,20 @@ export class MSScript extends MSObject {
 				if(i<this.cues.length-1) this.cues[i].setNextCue(this.cues[i+1]);
 			}
 
+			//Set other properties
+			this.keyObjectsPage=new MSKeyObjectsPage(json.KeyObjectsPage);
+			this.audioPlayer=new MSAudioPlayer(json.AudioPlayer);
 		}
+	}
+
+	addCue(type: MSCueTypeEnum="blank"): MSCue{
+		let newCue = new MSCue();
+
+		newCue.properties.type=type;
+
+		this.cues.push(newCue);
+
+		return newCue;
 	}
 
 	toJSON(){
@@ -101,10 +122,11 @@ export class MSScript extends MSObject {
 			TypeId: "Script",
 			Properties: this.properties,
 			Cues: this.cues,
-			KeyObjectsPage: {},
-			AudioPlayer: {},
+			KeyObjectsPage: this.keyObjectsPage,
+			AudioPlayer: this.audioPlayer,
 			VersionCreated: this.versionCreated,
 			VersionUpdated: this.versionUpdated,
+			GeneratedBy: "mediascript"
 		}
 	}
 }

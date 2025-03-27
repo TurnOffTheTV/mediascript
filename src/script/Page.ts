@@ -4,30 +4,30 @@
  */
 
 import {MSRawPage,MSRawStagePageModel} from "../raw";
-import {MSVisualItem,MSVisualItemText,MSVisualItemVideo} from "./Item";
+import {MSVisualItem,MSVisualItemClock,MSVisualItemImage,MSVisualItemStageData,MSVisualItemText,MSVisualItemTimer,MSVisualItemVideo} from "./Item";
 import {MSObject,MSObjectProperties} from "./Object";
 import {MSPageStoryboard} from "./Transition";
 
 /** Represents the properties of an `MSPage`. */
 class MSPageProperties extends MSObjectProperties {
 	/** The page's name. */
-	name: string;
+	name: string = "New page";
 	/** The page's custom name. */
-	customName: string;
+	customName: string = "";
 	/** Page comment in sidebar. */
-	comment: string;
+	comment: string = "";
 	/** If page is a title page. */
-	titlePage: boolean;
+	titlePage: boolean = false;
 	/** If page is skipped. */
-	skipped: boolean;
+	skipped: boolean = false;
 	/** If page is pinned. (use unknown) */
-	pinned: boolean;
+	pinned: boolean = false;
 	/** `AutoAdvanceTime` (use unknown) */
-	autoAdvanceTime: number;
+	autoAdvanceTime: number = 0;
 	/** `AutoAdvanceItemId` (use unknown) */
-	autoAdvanceItem: any;
+	autoAdvanceItem: any = null;
 	/** `AdditionalInfo` (use unknown) */
-	additionalInfo: null | string;
+	additionalInfo: null | string = null;
 
 	toJSON(){
 		return {
@@ -52,17 +52,17 @@ export class MSPage extends MSObject {
 	/** Properties of the page. */
 	properties: MSPageProperties = new MSPageProperties();;
 	/** The page's items. */
-	items: Array<MSVisualItem>;
+	items: Array<MSVisualItem> = [];
 	/** `VisualLayers` (use unknown) */
-	visualLayers: Array<any>;
+	visualLayers: Array<any> = [];
 	/** `Storyboard` (use unknown) */
-	storyboard: MSPageStoryboard;
+	storyboard: MSPageStoryboard = new MSPageStoryboard();
 	/** `Transition` (values unknown) */
-	transition: null;
+	transition: null = null;
 	/** `StagePage` */
-	stagePage: MSStagePage;
+	stagePage: MSStagePage = new MSStagePage();
 	/** `AudioItems` (use unknown) */
-	audioItems: Array<any>
+	audioItems: Array<any> = [];
 
 	/**
 	 * @param {MSRawPage} [json] The page's raw parsed JSON object. 
@@ -92,8 +92,20 @@ export class MSPage extends MSObject {
 					case "VisualItem+Text":
 						this.items.push(new MSVisualItemText(json.Items[i]));
 					break;
+					case "VisualItem+Image":
+						this.items.push(new MSVisualItemImage(json.Items[i]))
+					break;
 					case "VisualItem+Video":
 						this.items.push(new MSVisualItemVideo(json.Items[i]));
+					break;
+					case "VisualItem+Clock":
+						this.items.push(new MSVisualItemClock(json.Items[i]));
+					break;
+					case "VisualItem+Timer":
+						this.items.push(new MSVisualItemTimer(json.Items[i]));
+					break;
+					case "VisualItem+StageDataText":
+						this.items.push(new MSVisualItemStageData(json.Items[i]));
 					break;
 				}
 			}
@@ -135,22 +147,18 @@ export class MSPage extends MSObject {
 /** Represents the page displayed on the stage display. */
 export class MSStagePage extends MSObject {
 	/** Properties of the page. */
-	properties: MSPageProperties;
+	properties: MSPageProperties = new MSPageProperties();;
 	/** The page's items. */
-	items: Array<any>;
+	items: Array<MSVisualItem> = [];
 	/** `VisualLayers` (use unknown) */
-	visualLayers: Array<any>;
-	/** `VisualItems` (use unknown) */
-	visualItems: Array<any>;
+	visualLayers: Array<any> = [];
 	/** `Storyboard` (use unknown) */
-	storyboard: Object;
+	storyboard: MSPageStoryboard = new MSPageStoryboard();
 	/** `Transition` (values unknown) */
-	transition: null;
-	/** `AudioItems` (use unknown) */
-	audioItems: Array<any>
+	transition: null = null;
 
 	/**
-	 * @param {MSRawStagePageModel} [json] The stage page's raw parsed JSON object. 
+	 * @param {MSRawStagePageModel} [json] The page's raw parsed JSON object. 
 	 */
 	constructor(json?: MSRawStagePageModel){
 		super();
@@ -171,21 +179,45 @@ export class MSStagePage extends MSObject {
 			this.properties.autoAdvanceItem=json.Properties.AutoAdvanceItemId;
 			this.properties.additionalInfo=json.Properties.AdditionalInfo;
 
+			//Set up items
+			for(let i=0;i<json.Items.length;i++){
+				switch(json.Items[i].TypeId){
+					case "VisualItem+Text":
+						this.items.push(new MSVisualItemText(json.Items[i]));
+					break;
+					case "VisualItem+Video":
+						this.items.push(new MSVisualItemVideo(json.Items[i]));
+					break;
+				}
+			}
+
+			//Set other properties
+			this.storyboard=new MSPageStoryboard(json.Storyboard);
+			this.transition=json.Transition;
 		}
 	}
 
 	toJSON(){
+		let items = [];
+		let visualItems = [];
+
+		for(let i=0;i<this.items.length;i++){
+			items.push(this.items[i].toJSON());
+			items[i].$id=(i+1).toString();
+			items[i].$type="polino.persistence.Models.VisualItem, polino.persistence";
+			visualItems.push({$ref: (i+1).toString()})
+		}
+
 		return {
 			Id: this.id,
 			Version: this.version,
 			TypeId: "StagePageModel",
 			Properties: this.properties,
-			Items: this.items,
+			Items: items,
 			VisualLayers: [],
-			VisualItems: [],
+			VisualItems: visualItems,
 			Storyboard: this.storyboard,
-			Transition: this.transition,
-			AudioItems: this.audioItems
+			Transition: this.transition
 		}
 	}
 }

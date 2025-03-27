@@ -3,7 +3,7 @@
  * @author TurnOffTheTV <turnoffthetv@turnoffthetv.xyz>
  */
 
-import {MSDrawingSize, MSIntColor} from "./types";
+import {MSDrawingRectangle, MSDrawingSize, MSHexColor, MSIntColor} from "./types";
 
 /**
  * Generates a new, random, MediaShout-compliant id.
@@ -56,11 +56,35 @@ export function colorToInt(color: MSIntColor): number{
  */
 export function intToColor(int: number): MSIntColor{
 	return {
-		r:0,
-		g:0,
-		b:0,
-		a:1
+		r:int & 0xFF,
+		g:(int >> 8) & 0xFF,
+		b:(int >> 16) & 0xFF,
+		a:(int >> 24) & 0xFF
 	}
+}
+
+/**
+ * Convert an `MSHexColor` to a string.
+ * @param {MSHexColor} color The `MSHexColor` to convert.
+ * @returns {string} A string representing the color.
+ */
+
+function toHex(number: number) {
+	const hex = number.toString(16);
+	return (hex.length === 1 ? "0" + hex : hex).toUpperCase();
+}
+
+export function colorToString(color: MSHexColor): string{
+	return "#"+toHex(color.r)+toHex(color.g)+toHex(color.b)+toHex(color.a);
+}
+
+/**
+ * Convert a string to an `MSHexColor`.
+ * @param {string} string The string to convert.
+ * @returns {MSHexColor} An `MSHexColor` representing the color.
+ */
+export function stringToColor(string: string): MSHexColor{
+	return {r:parseInt(string.slice(1,3),16), g:parseInt(string.slice(3,5),16), b:parseInt(string.slice(5,7),16), a:parseInt(string.slice(7),16)};
 }
 
 /**
@@ -81,5 +105,28 @@ export function stringToDrawingSize(string: string): MSDrawingSize{
 	return {
 		width: +string.split(", ")[0],
 		height: +string.split(", ")[1]
+	}
+}
+
+/**
+ * Convert an `MSDrawingRectangle` to a string.
+ * @param {MSDrawingRectangle} rect The `MSDrawingRectangle` to convert.
+ * @returns {string} A string representing the drawing rectangle.
+ */
+export function drawingRectToString(rect: MSDrawingRectangle): string{
+	return rect.x+", "+rect.y+", "+rect.width+", "+rect.height
+}
+
+/**
+ * Convert a string to an `MSDrawingRectangle`.
+ * @param {string} string The string to convert.
+ * @returns {MSDrawingRectangle} An `MSDrawingRectangle` representing the drawing size.
+ */
+export function stringToDrawingRect(string: string): MSDrawingRectangle{
+	return {
+		x: +string.split(", ")[0],
+		y: +string.split(", ")[1],
+		width: +string.split(", ")[2],
+		height: +string.split(", ")[2]
 	}
 }

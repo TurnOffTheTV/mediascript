@@ -79,7 +79,7 @@ export interface MSRawCue {
 		},
 		Type: {
 			readonly $type: "polino.model.Enums.CueType, polino.model",
-			$value: 0
+			$value: 0 | 1 | 2 | 3 | 4;
 		},
 		NextCueId: null | string,
 		IsSkipped: boolean,
@@ -105,12 +105,21 @@ export interface MSRawCue {
 		WasWrapped: boolean
 	},
 	Pages: Array<MSRawPage>,
-	MainAppliedTemplate: null,
-	StageAppliedTemplate: null,
+	MainAppliedTemplate: MSRawAppliedTemplateModel | null,
+	StageAppliedTemplate: MSRawAppliedTemplateModel | null,
 	MainBackgroundItem: MSRawVisualItem | null,
 	StageBackgroundItem: MSRawVisualItem | null,
 	BackgroundAudioItem: MSRawVisualItem | null,
-	KeyDataObjectsPage: Object
+	KeyDataObjectsPage: MSRawKeyObjectsPage
+}
+
+/** Raw template. */
+export interface MSRawAppliedTemplateModel {
+	Id: string,
+	Version: string,
+	readonly TypeId: "AppliedTemplateModel",
+	Properties: {},
+	Name: string
 }
 
 /** Raw page. */
@@ -221,10 +230,10 @@ export interface MSRawVisualItem {
 		Angle: number,
 		IsLocked: boolean,
 		IsVisible: boolean,
-		Text?: string,
+		Text?: string | null,
 		Type?: {
 			readonly $type: "polino.model.Enums.TextItemType, polino.model",
-			$value: 0
+			$value: 0 | 1 | 2 | 6
 		}
 		Description?: string,
 		LinkedId?: string,
@@ -258,6 +267,76 @@ export interface MSRawVisualItem {
 		Volume?: {
 			readonly $type: "System.Int32, mscorlib",
 			$value: number
+		},
+		VisualizeRectangle?: {
+			readonly $type: "System.Drawing.Rectangle, System.Drawing",
+			$value: string
+		},
+		DpiX?: number,
+		DpiY?: number,
+		IsMain?: boolean,
+		CuesVisibility?: {
+			readonly $type: "System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Boolean, mscorlib]], mscorlib",
+			$value: {}
+		},
+		FontFamily?: {
+			readonly $type: "System.Windows.Media.FontFamily, PresentationCore",
+			$value: string
+		},
+		FontSize?: number,
+		FontStyle?: {
+			readonly $type: "System.Windows.FontStyle, PresentationCore",
+			$value: "Normal" | "Italic" | "Oblique"
+		},
+		FontWeight?: {
+			readonly $type: "System.Windows.FontWeight, PresentationCore",
+			$value: "Thin" | "ExtraLight" | "UltraLight" | "Light" | "Normal" | "Regular" | "Medium" | "DemiBold" | "SemiBold" | "Bold" | "ExtraBold" | "UltraBold" | "Black" | "Heavy" | "ExtraBlack" | "UltraBlack"
+		},
+		Foreground?: {
+			readonly $type: "System.Windows.Media.Color, PresentationCore",
+			$value: string
+		},
+		Highlight?: {
+			readonly $type: "System.Windows.Media.Color, PresentationCore",
+			$value: string
+		},
+		TextAlignment?: {
+			readonly $type: "System.Windows.TextAlignment, PresentationCore",
+			$value: 0 | 1 | 2 | 3
+		},
+		IsUnderlineEnabled?: boolean,
+		IsStrikethroughEnabled?: boolean,
+		Indent?: {
+			readonly $type: "System.Windows.Thickness, PresentationFramework",
+			$value: string
+		},
+		Time?: {
+			readonly $type: "System.DateTime, mscorlib"
+			$value: string
+		},
+		TimeFormat?: {
+			readonly $type: "polino.model.Enums.KeyObjects.TimeFormat, polino.model"
+			$value: 0
+		},
+		TimerFormat?: {
+			readonly $type: "polino.model.Enums.KeyObjects.TimerFormat, polino.model",
+			$value: 0
+		},
+		Hours?: {
+			readonly $type: "System.Int32, mscorlib",
+			$value: number
+		},
+		Minutes?: {
+			readonly $type: "System.Int32, mscorlib",
+			$value: number
+		},
+		Seconds?: {
+			readonly $type: "System.Int32, mscorlib",
+			$value: number
+		},
+		CompletedAction?: {
+			readonly $type: "polino.model.Enums.KeyObjects.CompletedAction, polino.model",
+			$value: 0
 		}
 	},
 	Effects: Array<MSRawEffect>

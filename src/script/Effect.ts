@@ -17,7 +17,7 @@ export class MSEffectCommon extends MSEffect {
 	properties: {
 		/** Opacity of item, 0-1. */
 		opacity: number
-	};
+	} = {opacity:1};
 
 	/**
 	 * @param {MSRawEffect} [json] The effect's raw parsed JSON object. 
@@ -55,7 +55,7 @@ export class MSEffectFlip extends MSEffect {
 		horizontal: boolean
 		/** Wether to flip item vertically. */
 		vertical: boolean
-	};
+	} = {horizontal:false,vertical:false};
 
 	/**
 	 * @param {MSRawEffect} [json] The effect's raw parsed JSON object. 
@@ -97,7 +97,7 @@ export class MSEffectOutline extends MSEffect {
 		opacity: number,
 		/** Outline width. */
 		width: number
-	};
+	} = {color:{r:0,g:0,b:0,a:255},opacity:1,width:0};
 
 	/**
 	 * @param {MSRawEffect} [json] The effect's raw parsed JSON object. 
@@ -123,7 +123,10 @@ export class MSEffectOutline extends MSEffect {
 			Version: this.version,
 			TypeId: "Effect+OutlineEffect",
 			Properties: {
-				Color: colorToInt(this.properties.color),
+				Color: {
+					$type: "System.Int32, mscorlib",
+					$value: colorToInt(this.properties.color)
+				},
 				Opacity: this.properties.opacity,
 				Size: this.properties.width
 			}
@@ -158,7 +161,7 @@ export class MSEffectText extends MSEffect {
 		/** Vertical alignment of text. */
 		verticalAlignment: MSVerticalAlignmentEnum;
 
-	};
+	} = {backgroundColor:{r:255,g:0,b:0,a:0},outlineColor:{r:0,g:0,b:0,a:255},shadowColor:{r:0,g:0,b:0,a:255},backgroundOpacity:0,outlineOpacity:1,shadowOpacity:0,outlineWidth:0,shadowAngle:135,shadowOffset:0,shadowBlurRadius:0,verticalAlignment:"center"};
 
 	/**
 	 * @param {MSRawEffect} [json] The effect's raw parsed JSON object. 

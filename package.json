@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "type": "commonjs",
   "scripts": {
-    "build": "tsc --build",
+    "build": "rm -r dist && tsc --build",
     "clean": "tsc --build --clean",
     "test": "node test/test.js"
   },

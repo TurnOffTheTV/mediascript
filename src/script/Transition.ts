@@ -10,9 +10,9 @@ import {MSObject,MSObjectProperties} from "./Object";
 /** Represents the properties of an `MSPageStoryboard`. */
 class MSPageStoryboardProperties extends MSObjectProperties {
 	/** Duration of the transition. */
-	duration: string;
+	duration: string = "00:00:00.5000000";
 	/** Direction of the transition. */
-	direction: MSTransitionDirectionEnum;
+	direction: MSTransitionDirectionEnum = 0;
 
 	toJSON(){
 		return {
@@ -31,11 +31,11 @@ class MSPageStoryboardProperties extends MSObjectProperties {
 /** Represents a MediaShout page transition storyboard. */
 export class MSPageStoryboard extends MSObject {
 	/** Properties of the storyboard. */
-	properties: MSPageStoryboardProperties = new MSPageStoryboardProperties();;
+	properties: MSPageStoryboardProperties = new MSPageStoryboardProperties();
 	/** Duration of the transition. */
-	duration: string;
+	duration: string = "00:00:00";
 	/** The storyboard's page transition object. */
-	transition: MSPageTransition;
+	transition: MSPageTransition = new MSPageTransitionNone();
 
 	/**
 	 * @param {MSRawPageTransitionStoryboard} [json] The storyboard's raw json object.
@@ -67,7 +67,7 @@ export class MSPageStoryboard extends MSObject {
 	toJSON(){
 		return {
 			Id: this.id,
-			Verion: this.version,
+			Version: this.version,
 			TypeId: "PageTransitionStoryboard",
 			Properties: this.properties,
 			Duration: this.duration,
@@ -82,7 +82,7 @@ class MSPageTransition extends MSObject {
 	properties: {
 		/** Duration of the transition. */
 		duration: string
-	};
+	} = {duration: "00:00:00.5000000"};
 }
 
 /** Represents a "none" page transition. */
@@ -121,13 +121,13 @@ export class MSPageTransitionNone extends MSPageTransition {
 /** Represents the properties of an `MSVisualItemStoryboard`. */
 class MSVisualItemStoryboardProperties extends MSObjectProperties {
 	/** Duration of the transition. */
-	duration: string;
+	duration: string = "00:00:00.5000000";
 	/** Direction of the transition. */
-	direction: MSTransitionDirectionEnum;
+	direction: MSTransitionDirectionEnum = 0;
 	/** Delay of the transition. */
-	delay: string;
+	delay: string = "00:00:00";
 	/** `StepsOffset` (use unknown) */
-	stepsOffset: number;
+	stepsOffset: number = 0;
 
 	toJSON(){
 		return {
@@ -154,15 +154,15 @@ class MSVisualItemStoryboardProperties extends MSObjectProperties {
 /** Represents a MediaShout visual item transition storyboard. */
 export class MSVisualItemStoryboard extends MSObject {
 	/** Properties of the storyboard. */
-	properties: MSVisualItemStoryboardProperties;
+	properties: MSVisualItemStoryboardProperties = new MSVisualItemStoryboardProperties();
 	/** Duration of the transition. */
-	duration: string;
+	duration: string = "00:00:00";
 	/** `StepsOffset` (use unknown) */
-	stepsOffset: number;
+	stepsOffset: number = 0;
 	/** Delay of the transition. */ 
-	delay: string;
+	delay: string = "00:00:00";
 	/** The storyboard's visual item transition object. */
-	transition: MSVisualItemTransition;
+	transition: MSVisualItemTransition = new MSVisualItemTransitionNone();
 
 	constructor(json?: MSRawObjectTransitionStoryboard){
 		super();
@@ -212,7 +212,7 @@ class MSVisualItemTransition extends MSObject {
 	properties: {
 		/** Duration of the transition. */
 		duration?: string
-	};
+	} = {duration:"00:00:00.5000000"};
 }
 
 /** Represents a "none" visual item transition. */
