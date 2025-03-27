@@ -223,5 +223,5 @@ $RECYCLE.BIN/
 
 .vscode/
 
-test
+/test
 !/test/test.js
