@@ -45,7 +45,7 @@ export type MSTimeFormatEnum = 0;
 /** Enum for timer format. */
 export type MSTimerFormatEnum = 0;
 
-/** Enum for completed action. */
+/** Enum for timer completed action. */
 export type MSCompletedActionEnum = 0;
 
 /** Font style values. [More info...](https://learn.microsoft.com/en-us/dotnet/api/system.windows.fontstyle) */
@@ -76,10 +76,18 @@ export interface MSDrawingSize {
 	height: number;
 }
 
-/** Drawing rectangle representation that will be turned into a [`System.Drawing.Rectangle`](https://learn.microsoft.com/en-us/dotnet/api/system.drawing.rectangle) */
+/** Drawing rectangle representation that will be turned into a [`System.Drawing.Rectangle`](https://learn.microsoft.com/en-us/dotnet/api/system.drawing.rectangle). */
 export interface MSDrawingRectangle {
 	x: number;
 	y: number;
 	width: number;
 	height: number;
+}
+
+/** Thickness representation that will be turned into a [System.Windows.Thickness](https://learn.microsoft.com/en-us/dotnet/api/system.windows.thickness). */
+export interface MSThickness {
+	top: number,
+	bottom: number,
+	left: number,
+	right: number
 }

@@ -5,10 +5,10 @@
 
 import {MSEffect,MSEffectBlur,MSEffectCommon,MSEffectContrastBrightnessAdjust,MSEffectFlip,MSEffectGrayscale,MSEffectHueRotate,MSEffectInvertColors,MSEffectOutline,MSEffectSaturationAdjust,MSEffectSepia,MSEffectShadow,MSEffectText,MSEffectVideoCrop,MSEffectVideoPlayTimes} from "./Effect"
 import {MSRawVisualItem} from "../raw";
-import {MSCompletedActionEnum, MSDrawingRectangle,MSDrawingSize,MSFastPositioningStateEnum,MSFontStyle,MSFontWeight,MSHexColor,MSTextAlignmentEnum,MSTextItemTypeEnum,MSTimeFormatEnum,MSTimerFormatEnum} from "../types";
+import {MSCompletedActionEnum, MSDrawingRectangle,MSDrawingSize,MSFastPositioningStateEnum,MSFontStyle,MSFontWeight,MSHexColor,MSTextAlignmentEnum,MSTextItemTypeEnum,MSThickness,MSTimeFormatEnum,MSTimerFormatEnum} from "../types";
 import {MSObject,MSObjectProperties} from "./Object"
 import {MSVisualItemStoryboard} from "./Transition";
-import {colorToString, drawingRectToString, drawingSizeToString,stringToColor,stringToDrawingRect,stringToDrawingSize} from "../internal-functions";
+import {colorToString,drawingRectToString,drawingSizeToString,stringToColor,stringToDrawingRect,stringToDrawingSize,stringToThickness,thicknessToString} from "../internal-functions";
 
 /** Base visual item properties class. */
 class MSVisualItemProperties extends MSObjectProperties {
@@ -198,6 +198,14 @@ export class MSVisualItemText extends MSVisualItem {
 
 		if(json && json.TypeId==="VisualItem+Text"){
 			//Set properties properties
+			this.properties.name=json.Properties.Name;
+			this.properties.x=json.Properties.X;
+			this.properties.y=json.Properties.Y;
+			this.properties.width=json.Properties.Width;
+			this.properties.height=json.Properties.Height;
+			this.properties.angle=json.Properties.Angle;
+			this.properties.locked=json.Properties.IsLocked;
+			this.properties.visible=json.Properties.IsVisible;
 			this.properties.text=json.Properties.Text;
 			switch(json.Properties.Type.$value){
 				case 0:
@@ -227,7 +235,7 @@ export class MSVisualItemText extends MSVisualItem {
 		return {
 			Id: this.id,
 			Version: this.version,
-			TypeId: "VisualItem+Video",
+			TypeId: "VisualItem+Text",
 			Properties: this.properties,
 			Effects: this.effects,
 			Storyboard: this.storyboard
@@ -297,11 +305,15 @@ export class MSVisualItemImage extends MSVisualItem {
 		super(json);
 
 		if(json && json.TypeId==="VisualItem+Image"){
-			//Set main properties
-			this.id=json.Id;
-			this.version=json.Version;
-
 			//Set properties properties
+			this.properties.name=json.Properties.Name;
+			this.properties.x=json.Properties.X;
+			this.properties.y=json.Properties.Y;
+			this.properties.width=json.Properties.Width;
+			this.properties.height=json.Properties.Height;
+			this.properties.angle=json.Properties.Angle;
+			this.properties.locked=json.Properties.IsLocked;
+			this.properties.visible=json.Properties.IsVisible;
 			this.properties.identifier=json.Properties.Identifier;
 			this.properties.source=json.Properties.Source;
 			this.properties.originalSource=json.Properties.OriginalSource;
@@ -390,11 +402,15 @@ export class MSVisualItemVideo extends MSVisualItem {
 		super(json);
 
 		if(json && json.TypeId==="VisualItem+Video"){
-			//Set main properties
-			this.id=json.Id;
-			this.version=json.Version;
-
 			//Set properties properties
+			this.properties.name=json.Properties.Name;
+			this.properties.x=json.Properties.X;
+			this.properties.y=json.Properties.Y;
+			this.properties.width=json.Properties.Width;
+			this.properties.height=json.Properties.Height;
+			this.properties.angle=json.Properties.Angle;
+			this.properties.locked=json.Properties.IsLocked;
+			this.properties.visible=json.Properties.IsVisible;
 			this.properties.identifier=json.Properties.Identifier;
 			this.properties.source=json.Properties.Source;
 			this.properties.originalSource=json.Properties.OriginalSource;
@@ -445,7 +461,7 @@ class MSVisualItemStageDataProperties extends MSVisualItemProperties {
 	/** If the visual item is stricken. */
 	strikethrough: boolean = false;
 	/** Border thickness of visual item. */
-	borderThickness: any;
+	borderThickness: MSThickness;
 
 	toJSON(){
 		let textAlignment: number;
@@ -561,7 +577,7 @@ class MSVisualItemStageDataProperties extends MSVisualItemProperties {
 			IsStrikethroughEnabled: this.strikethrough,
 			Indent: {
 				$type: "System.Windows.Thickness, PresentationFramework",
-				$value: this.borderThickness
+				$value: thicknessToString(this.borderThickness)
 			}
 		}
 	}
@@ -579,10 +595,6 @@ export class MSVisualItemStageData extends MSVisualItem {
 		super(json);
 
 		if(json && json.TypeId==="VisualItem+StageDataText"){
-			//Set main properties
-			this.id=json.Id;
-			this.version=json.Version;
-
 			//Set properties properties
 			this.properties.name=json.Properties.Name;
 			this.properties.x=json.Properties.X;
@@ -617,7 +629,7 @@ export class MSVisualItemStageData extends MSVisualItem {
 			}
 			this.properties.underline=json.Properties.IsUnderlineEnabled;
 			this.properties.strikethrough=json.Properties.IsStrikethroughEnabled;
-			this.properties.borderThickness=json.Properties.Indent.$value;
+			this.properties.borderThickness=stringToThickness(json.Properties.Indent.$value);
 		
 		}
 	}
@@ -755,7 +767,7 @@ class MSVisualItemClockProperties extends MSVisualItemStageDataProperties {
 			IsStrikethroughEnabled: this.strikethrough,
 			Indent: {
 				$type: "System.Windows.Thickness, PresentationFramework",
-				$value: this.borderThickness
+				$value: thicknessToString(this.borderThickness)
 			},
 			Time: {
 				$type: "System.DateTime, mscorlib",
@@ -781,10 +793,6 @@ export class MSVisualItemClock extends MSVisualItem {
 		super(json);
 
 		if(json && json.TypeId==="VisualItem+Clock"){
-			//Set main properties
-			this.id=json.Id;
-			this.version=json.Version;
-
 			//Set properties properties
 			this.properties.name=json.Properties.Name;
 			this.properties.x=json.Properties.X;
@@ -819,7 +827,7 @@ export class MSVisualItemClock extends MSVisualItem {
 			}
 			this.properties.underline=json.Properties.IsUnderlineEnabled;
 			this.properties.strikethrough=json.Properties.IsStrikethroughEnabled;
-			this.properties.borderThickness=json.Properties.Indent.$value;
+			this.properties.borderThickness=stringToThickness(json.Properties.Indent.$value);
 			this.properties.time=new Date(json.Properties.Time.$value);
 			this.properties.timeFormat=json.Properties.TimeFormat.$value;
 		}
@@ -964,7 +972,7 @@ class MSVisualItemTimerProperties extends MSVisualItemStageDataProperties {
 			IsStrikethroughEnabled: this.strikethrough,
 			Indent: {
 				$type: "System.Windows.Thickness, PresentationFramework",
-				$value: this.borderThickness
+				$value: thicknessToString(this.borderThickness)
 			},
 			TimerFormat: {
 				$type: "polino.model.Enums.KeyObjects.TimerFormat, polino.model",
@@ -1002,10 +1010,6 @@ export class MSVisualItemTimer extends MSVisualItem {
 		super(json);
 
 		if(json && json.TypeId==="VisualItem+Timer"){
-			//Set main properties
-			this.id=json.Id;
-			this.version=json.Version;
-
 			//Set properties properties
 			this.properties.name=json.Properties.Name;
 			this.properties.x=json.Properties.X;
@@ -1040,7 +1044,7 @@ export class MSVisualItemTimer extends MSVisualItem {
 			}
 			this.properties.underline=json.Properties.IsUnderlineEnabled;
 			this.properties.strikethrough=json.Properties.IsStrikethroughEnabled;
-			this.properties.borderThickness=json.Properties.Indent.$value;
+			this.properties.borderThickness=stringToThickness(json.Properties.Indent.$value);
 			this.properties.timerFormat=json.Properties.TimerFormat.$value;
 			this.properties.hours=json.Properties.Hours.$value;
 			this.properties.minutes=json.Properties.Minutes.$value;

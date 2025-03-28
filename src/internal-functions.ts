@@ -3,7 +3,7 @@
  * @author TurnOffTheTV <turnoffthetv@turnoffthetv.xyz>
  */
 
-import {MSDrawingRectangle, MSDrawingSize, MSHexColor, MSIntColor} from "./types";
+import {MSDrawingRectangle, MSDrawingSize, MSHexColor, MSIntColor, MSThickness} from "./types";
 
 /**
  * Generates a new, random, MediaShout-compliant id.
@@ -128,5 +128,28 @@ export function stringToDrawingRect(string: string): MSDrawingRectangle{
 		y: +string.split(", ")[1],
 		width: +string.split(", ")[2],
 		height: +string.split(", ")[2]
+	}
+}
+
+/**
+ * Convert an `MSThickness` to a string.
+ * @param {MSThickness} thickness The `MSThickness` to convert.
+ * @returns {string} A string representing the thickness.
+ */
+export function thicknessToString(thickness: MSThickness): string{
+	return thickness.left+", "+thickness.top+", "+thickness.right+", "+thickness.bottom;
+}
+
+/**
+ * Convert a string to an `MSThickness`.
+ * @param {string} string The string to convert.
+ * @returns {MSThickness} An `MSThickness` representing the thickness.
+ */
+export function stringToThickness(string: string): MSThickness{
+	return {
+		left: +string.split(", ")[0],
+		top: +string.split(", ")[1],
+		right: +string.split(", ")[2],
+		bottom: +string.split(", ")[3]
 	}
 }

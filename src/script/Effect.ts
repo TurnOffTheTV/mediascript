@@ -270,7 +270,7 @@ export class MSEffectShadow extends MSEffect {
 		offset: number,
 		/** Angle of shadow. */
 		angle: number
-	};
+	} = {blurRadius:0,color:{r:0,g:0,b:0,a:0},opacity:1,offset:0,angle:135};
 
 	/**
 	 * @param {MSRawEffect} [json] The effect's raw parsed JSON object. 
@@ -320,7 +320,7 @@ export class MSEffectSepia extends MSEffect {
 	properties: {
 		/** Wether or not the effect is enabled. */
 		enabled: boolean
-	};
+	} = {enabled:false};
 
 	/**
 	 * @param {MSRawEffect} [json] The effect's raw parsed JSON object. 
@@ -356,7 +356,7 @@ export class MSEffectGrayscale extends MSEffect {
 	properties: {
 		/** Wether or not the effect is enabled. */
 		enabled: boolean
-	};
+	} = {enabled:false};
 
 	/**
 	 * @param {MSRawEffect} [json] The effect's raw parsed JSON object. 
@@ -394,7 +394,7 @@ export class MSEffectBlur extends MSEffect {
 		enabled: boolean,
 		/** Radius of the blur. */
 		radius: number
-	};
+	} = {enabled:false,radius:0};
 
 	/**
 	 * @param {MSRawEffect} [json] The effect's raw parsed JSON object. 
@@ -432,7 +432,7 @@ export class MSEffectInvertColors extends MSEffect {
 	properties: {
 		/** Wether or not the effect is enabled. */
 		enabled: boolean
-	};
+	} = {enabled:false};
 
 	/**
 	 * @param {MSRawEffect} [json] The effect's raw parsed JSON object. 
@@ -470,7 +470,7 @@ export class MSEffectHueRotate extends MSEffect {
 		enabled: boolean,
 		/** Amount to offset the hue by. (values unknown) */
 		hueOffset: number
-	};
+	} = {enabled:false,hueOffset:0};
 
 	/**
 	 * @param {MSRawEffect} [json] The effect's raw parsed JSON object. 
@@ -510,7 +510,7 @@ export class MSEffectSaturationAdjust extends MSEffect {
 		enabled: boolean,
 		/** Saturation multiplier. (presumably) */
 		saturationAdjust: number
-	};
+	} = {enabled:false,saturationAdjust:1};
 
 	/**
 	 * @param {MSRawEffect} [json] The effect's raw parsed JSON object. 
@@ -552,7 +552,7 @@ export class MSEffectContrastBrightnessAdjust extends MSEffect {
 		contrastAdjust: number,
 		/** Brightness multiplier. (presumably) */
 		brightnessAdjust: number
-	};
+	} = {enabled:false,contrastAdjust:0,brightnessAdjust:0};
 
 	/**
 	 * @param {MSRawEffect} [json] The effect's raw parsed JSON object. 
@@ -594,7 +594,7 @@ export class MSEffectVideoCrop extends MSEffect {
 		startPosition: number,
 		/** End of the crop. */
 		endPosition: number
-	};
+	} = {startPosition:0,endPosition:0};
 
 	/**
 	 * @param {MSRawEffect} [json] The effect's raw parsed JSON object. 
@@ -632,7 +632,7 @@ export class MSEffectVideoPlayTimes extends MSEffect {
 	properties: {
 		/** How many times to play the video. 0 represents an infinite loop. */
 		playTimes: number
-	};
+	} = {playTimes:0};
 
 	/**
 	 * @param {MSRawEffect} [json] The effect's raw parsed JSON object. 
