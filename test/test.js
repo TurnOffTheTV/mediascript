@@ -13,9 +13,9 @@ test();
 
 async function test(){
 
-	let script = await blobToScript(new Blob([fs.readFileSync("simple.sc7x")]));
+	let script = await blobToScript(new Blob([fs.readFileSync("ndi.sc7x")]));
 
-	fs.writeFileSync("simple.scriptModel.json",JSON.stringify(script,null,2));
-	fs.writeFileSync("output.simple.sc7x",Buffer.from(await (await scriptToBlob(script)).arrayBuffer()));
+	fs.writeFileSync("ndi.scriptModel.json",JSON.stringify(script,null,2));
+	fs.writeFileSync("output.ndi.sc7x",Buffer.from(await (await scriptToBlob(script)).arrayBuffer()));
 
 }

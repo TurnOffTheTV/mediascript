@@ -257,7 +257,7 @@ export interface MSRawVisualItem {
 		},
 		FastPositioningState?: {
 			readonly $type: "polino.model.Enums.FastPositioningState, polino.model",
-			$value: 2
+			$value: 0 | 2
 		},
 		Rate?: {
 			readonly $type: "System.Single, mscorlib",

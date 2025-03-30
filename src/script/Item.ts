@@ -434,6 +434,92 @@ export class MSVisualItemVideo extends MSVisualItem {
 	}
 }
 
+/** Properties of an `MSVisualItemNDISource`. */
+class MSVisualItemNDISourceProperties extends MSVisualItemProperties {
+	/** `Identifier` (use unknown) */
+	identifier: string | null = null;
+	/** Path to the video's source. (unknown how this is used with ndi) */
+	source: string | null = null;
+	/** Path to the video's original source. (unknown how this is used with ndi) */
+	originalSource: string = "";
+	/** `InitialSize` (use unknown) */
+	initialSize: MSDrawingSize = {width:640,height:360};
+	/** `FastPositioningState` (use unknown) */
+	fastPositioningState: MSFastPositioningStateEnum = 0;
+	/** Source volume, 0-100. */
+	volume: number = 100;
+
+	toJSON(){
+		return {
+			Name: this.name,
+			X: this.x,
+			Y: this.y,
+			Width: this.width,
+			Height: this.height,
+			Angle: this.angle,
+			IsLocked: this.locked,
+			IsVisible: this.visible,
+			Identifier: this.identifier,
+			Source: this.source,
+			OriginalSource: this.originalSource,
+			InitialSize: {
+				$type: "System.Drawing.Size, System.Drawing",
+				$value: drawingSizeToString(this.initialSize)
+			},
+			FastPositioningState: {
+				$type: "polino.model.Enums.FastPositioningState, polino.model",
+				$value: this.fastPositioningState
+			},
+			Volume: {
+				$type: "System.Int32, mscorlib",
+				$value: this.volume
+			}
+		}
+	}
+}
+
+/** Represents a MediaShout NDI source object. */
+export class MSVisualItemNDISource extends MSVisualItem {
+	/** Properties of the NDI source. */
+	properties: MSVisualItemNDISourceProperties = new MSVisualItemNDISourceProperties();
+
+	/**
+	 * @param {MSRawVisualItem} [json] The visual item's raw parsed JSON object. 
+	 */
+	constructor(json?: MSRawVisualItem){
+		super(json);
+
+		if(json && json.TypeId==="VisualItem+NdiVideoSource"){
+			//Set properties properties
+			this.properties.name=json.Properties.Name;
+			this.properties.x=json.Properties.X;
+			this.properties.y=json.Properties.Y;
+			this.properties.width=json.Properties.Width;
+			this.properties.height=json.Properties.Height;
+			this.properties.angle=json.Properties.Angle;
+			this.properties.locked=json.Properties.IsLocked;
+			this.properties.visible=json.Properties.IsVisible;
+			this.properties.identifier=json.Properties.Identifier;
+			this.properties.source=json.Properties.Source;
+			this.properties.originalSource=json.Properties.OriginalSource;
+			this.properties.initialSize=stringToDrawingSize(json.Properties.InitialSize.$value);
+			this.properties.fastPositioningState=json.Properties.FastPositioningState.$value;
+			this.properties.volume=json.Properties.Volume.$value;
+		}
+	}
+
+	toJSON(){
+		return {
+			Id: this.id,
+			Version: this.version,
+			TypeId: "VisualItem+NdiVideoSource",
+			Properties: this.properties,
+			Effects: this.effects,
+			Storyboard: this.storyboard
+		}
+	}
+}
+
 /** Properties of an `MSVisualItemStageData`. */
 class MSVisualItemStageDataProperties extends MSVisualItemProperties {
 	/** `IsMain` (use unknown) */

@@ -19,7 +19,7 @@ export type MSPageTransitionId = "PageTransition+None" | "PageTransition+Cut" | 
 export type MSObjectTransitionId = "ObjectTransition+None";
 
 /** `TypeId`s for visual items. */
-export type MSVisualItemId = "VisualItem+Text" | "VisualItem+Image" | "VisualItem+Video" | "VisualItem+Clock" | "VisualItem+Timer" | "VisualItem+StageDataText";
+export type MSVisualItemId = "VisualItem+Text" | "VisualItem+Image" | "VisualItem+Video" | "VisualItem+Clock" | "VisualItem+Timer" | "VisualItem+StageDataText" | "VisualItem+NdiVideoSource";
 
 /** `TypeId`s for effects. `ContrastBrighnessAdjustEffect` is not an error. */
 export type MSEffectId = "Effect+CommonEffect" | "Effect+FlipEffect" | "Effect+OutlineEffect" | "Effect+TextEffect" | "Effect+ShadowEffect" | "Effect+SepiaEffect" | "Effect+GrayscaleEffect" | "Effect+BlurEffect" | "Effect+InvertColorsEffect" | "Effect+HueRotateEffect" | "Effect+SaturationAdjustEffect" | "Effect+ContrastBrighnessAdjustEffect" | "Effect+VideoCropEffect" | "Effect+VideoPlayTimesEffect";
@@ -37,7 +37,7 @@ export type MSTextAlignmentEnum = "left" | "right" | "center" | "justify";
 export type MSTextItemTypeEnum = "basic" | "lyric" | "bible" | "3" | "4" | "5" | "text cue"
 
 /** Enum for fast positioning state. */
-export type MSFastPositioningStateEnum = 2;
+export type MSFastPositioningStateEnum = 0 | 2;
 
 /** Enum for time format. */
 export type MSTimeFormatEnum = 0;

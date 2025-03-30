@@ -4,7 +4,7 @@
  */
 
 import {MSRawPage,MSRawStagePageModel} from "../raw";
-import {MSVisualItem,MSVisualItemClock,MSVisualItemImage,MSVisualItemStageData,MSVisualItemText,MSVisualItemTimer,MSVisualItemVideo} from "./Item";
+import {MSVisualItem,MSVisualItemClock,MSVisualItemImage,MSVisualItemNDISource,MSVisualItemStageData,MSVisualItemText,MSVisualItemTimer,MSVisualItemVideo} from "./Item";
 import {MSObject,MSObjectProperties} from "./Object";
 import {MSPageStoryboard} from "./Transition";
 
@@ -97,6 +97,9 @@ export class MSPage extends MSObject {
 					break;
 					case "VisualItem+Video":
 						this.items.push(new MSVisualItemVideo(json.Items[i]));
+					break;
+					case "VisualItem+NdiVideoSource":
+						this.items.push(new MSVisualItemNDISource(json.Items[i]));
 					break;
 					case "VisualItem+Clock":
 						this.items.push(new MSVisualItemClock(json.Items[i]));
