@@ -547,7 +547,7 @@ class MSVisualItemStageDataProperties extends MSVisualItemProperties {
 	/** If the visual item is stricken. */
 	strikethrough: boolean = false;
 	/** Border thickness of visual item. */
-	borderThickness: MSThickness;
+	borderThickness: MSThickness = {top:0,bottom:0,left:0,right:0};
 
 	toJSON(){
 		let textAlignment: number;
@@ -1144,6 +1144,195 @@ export class MSVisualItemTimer extends MSVisualItem {
 			Id: this.id,
 			Version: this.version,
 			TypeId: "VisualItem+Timer",
+			Properties: this.properties,
+			Effects: this.effects,
+			Storyboard: this.storyboard
+		}
+	}
+}
+
+/** Properties of an `MSVisualItemNewsRibbon`. */
+class MSVisualItemNewsRibbonProperties extends MSVisualItemStageDataProperties {
+	/** Speed of the news ribbon. */
+	speed: number;
+
+	toJSON(){
+		let textAlignment: number;
+
+		switch(this.textAlignment){
+			case "left":
+				textAlignment=0;
+			break;
+			case "right":
+				textAlignment=1;
+			break;
+			case "center":
+				textAlignment=2;
+			break;
+			case "justify":
+				textAlignment=3;
+			break;
+		}
+		
+		let fontWeight: string;
+		switch(this.fontWeight){
+			case "thin":
+				fontWeight="Thin";
+			break;
+			case "extralight":
+				fontWeight="ExtraLight";
+			break;
+			case "ultralight":
+				fontWeight="UltraLight";
+			break;
+			case "light":
+				fontWeight="Light";
+			break;
+			case "normal":
+				fontWeight="Normal";
+			break;
+			case "regular":
+				fontWeight="Regular";
+			break;
+			case "medium":
+				fontWeight="Medium";
+			break;
+			case "demibold":
+				fontWeight="DemiBold";
+			break;
+			case "semibold":
+				fontWeight="SemiBold";
+			break;
+			case "bold":
+				fontWeight="Bold";
+			break;
+			case "extrabold":
+				fontWeight="ExtraBold";
+			break;
+			case "ultrabold":
+				fontWeight="UltraBold";
+			break;
+			case "black":
+				fontWeight="Black";
+			break;
+			case "heavy":
+				fontWeight="Heavy";
+			break;
+			case "extrablack":
+				fontWeight="ExtraBlack";
+			break;
+			case "ultrablack":
+				fontWeight="UltraBlack";
+			break;
+		}
+
+		return {
+			Name: this.name,
+			X: this.x,
+			Y: this.y,
+			Width: this.width,
+			Height: this.height,
+			Angle: this.angle,
+			IsLocked: this.locked,
+			IsVisible: this.visible,
+			IsMain: this.main,
+			CuesVisibility: {
+				$type: "System.Collections.Generic.Dictionary`2[[System.String, mscorlib],[System.Boolean, mscorlib]], mscorlib",
+				$value: {}
+			},
+			Text: this.text,
+			FontFamily: {
+				$type: "System.Windows.Media.FontFamily, PresentationCore",
+				$value: this.fontFamily
+			},
+			FontSize: this.fontSize,
+			FontStyle: {
+				$type: "System.Windows.FontStyle, PresentationCore",
+				$value: this.fontStyle.charAt(0).toUpperCase() + this.fontStyle.slice(1),
+			},
+			FontWeight: {
+				$type: "System.Windows.FontWeight, PresentationCore",
+				$value: fontWeight
+			},
+			Foreground: {
+				$type: "System.Windows.Media.Color, PresentationCore",
+				$value: colorToString(this.foregroundColor)
+			},
+			Highlight: {
+				$type: "System.Windows.Media.Color, PresentationCore",
+				$value: colorToString(this.highlightColor)
+			},
+			TextAlignment: {
+				$type: "System.Windows.TextAlignment, PresentationCore",
+				$value: textAlignment
+			},
+			IsUnderlineEnabled: this.underline,
+			IsStrikethroughEnabled: this.strikethrough,
+			Indent: {
+				$type: "System.Windows.Thickness, PresentationFramework",
+				$value: thicknessToString(this.borderThickness)
+			},
+			NewsRibbonSpeed: this.speed
+		}
+	}
+}
+
+/** Represents a MediaShout news ribbon object. */
+export class MSVisualItemNewsRibbon extends MSVisualItem {
+	/** Properties of the news ribbon. */
+	properties: MSVisualItemNewsRibbonProperties = new MSVisualItemNewsRibbonProperties();
+
+	/**
+	 * @param {MSRawVisualItem} [json] The visual item's raw parsed JSON object. 
+	 */
+	constructor(json?: MSRawVisualItem){
+		super(json);
+
+		if(json && json.TypeId==="VisualItem+NewsRibbon"){
+			//Set properties properties
+			this.properties.name=json.Properties.Name;
+			this.properties.x=json.Properties.X;
+			this.properties.y=json.Properties.Y;
+			this.properties.width=json.Properties.Width;
+			this.properties.height=json.Properties.Height;
+			this.properties.angle=json.Properties.Angle;
+			this.properties.locked=json.Properties.IsLocked;
+			this.properties.visible=json.Properties.IsVisible;
+			this.properties.main=json.Properties.IsMain;
+			this.properties.visibleCues=Object.keys(json.Properties.CuesVisibility.$value);
+			this.properties.text=<null>json.Properties.Text;
+			this.properties.fontFamily=json.Properties.FontFamily.$value;
+			this.properties.fontSize=json.Properties.FontSize;
+			this.properties.fontStyle=<MSFontStyle>(json.Properties.FontStyle.$value.toLowerCase());
+			this.properties.fontWeight=<MSFontWeight>(json.Properties.FontWeight.$value.toLowerCase());
+			this.properties.foregroundColor=stringToColor(json.Properties.Foreground.$value);
+			this.properties.highlightColor=stringToColor(json.Properties.Highlight.$value);
+			switch(json.Properties.TextAlignment.$value){
+				case 0:
+					this.properties.textAlignment="left";
+				break;
+				case 1:
+					this.properties.textAlignment="right";
+				break;
+				case 2:
+					this.properties.textAlignment="center";
+				break;
+				case 3:
+					this.properties.textAlignment="justify";
+				break;
+			}
+			this.properties.underline=json.Properties.IsUnderlineEnabled;
+			this.properties.strikethrough=json.Properties.IsStrikethroughEnabled;
+			this.properties.borderThickness=stringToThickness(json.Properties.Indent.$value);
+			this.properties.speed=json.Properties.NewsRibbonSpeed;
+		}
+	}
+
+	toJSON(){
+		return {
+			Id: this.id,
+			Version: this.version,
+			TypeId: "VisualItem+NewsRibbon",
 			Properties: this.properties,
 			Effects: this.effects,
 			Storyboard: this.storyboard

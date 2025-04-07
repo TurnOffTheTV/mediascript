@@ -24,7 +24,9 @@
   },
   "homepage": "https://github.com/TurnOffTheTV/mediascript#readme",
   "dependencies": {
-    "jszip": "^3.10.1"
+    "jszip": "^3.10.1",
+    "tsc": "^2.0.4",
+    "typescript": "^5.8.3"
   },
   "devDependencies": {
     "@types/node": "^22.13.1"

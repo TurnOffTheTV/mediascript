@@ -337,7 +337,8 @@ export interface MSRawVisualItem {
 		CompletedAction?: {
 			readonly $type: "polino.model.Enums.KeyObjects.CompletedAction, polino.model",
 			$value: 0
-		}
+		},
+		NewsRibbonSpeed?: number
 	},
 	Effects: Array<MSRawEffect>
 	Storyboard: MSRawObjectTransitionStoryboard

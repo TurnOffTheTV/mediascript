@@ -30,6 +30,10 @@ Text on slides is stored as rich text format, and so can be edited with any prog
 
 Colors are stored as little-endian 32-bit signed integers. Each byte of the integer represents one color channel, for R,G,B, and A.
 
+## sc7 File Format
+
+The sc7 file format is exactly the same as the sc7x format, the only difference is that assets are not stored in the file. Asset thumbnails are still stored, though.
+
 ## Interesting Notes
 
 MediaShout orders the file with the thumbnail data first and the ZIP afterwards, but it will accept a script file with those two flipped, as long as the values in the header reflect the change.

@@ -4,7 +4,7 @@
  */
 
 import {MSObject} from "./Object"
-import {MSVisualItem,MSVisualItemClock,MSVisualItemImage,MSVisualItemNDISource,MSVisualItemStageData,MSVisualItemText,MSVisualItemTimer,MSVisualItemVideo} from "./Item"
+import {MSVisualItem,MSVisualItemClock,MSVisualItemImage,MSVisualItemNDISource,MSVisualItemNewsRibbon,MSVisualItemStageData,MSVisualItemText,MSVisualItemTimer,MSVisualItemVideo} from "./Item"
 import {MSRawKeyObjectsPage} from "../raw";
 
 /** Represents a MediaShout key objects page. */
@@ -48,6 +48,9 @@ export class MSKeyObjectsPage extends MSObject {
 					break;
 					case "VisualItem+StageDataText":
 						this.items.push(new MSVisualItemStageData(json.Items[i]));
+					break;
+					case "VisualItem+NewsRibbon":
+						this.items.push(new MSVisualItemNewsRibbon(json.Items[i]));
 					break;
 				}
 			}

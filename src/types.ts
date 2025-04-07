@@ -19,7 +19,7 @@ export type MSPageTransitionId = "PageTransition+None" | "PageTransition+Cut" | 
 export type MSObjectTransitionId = "ObjectTransition+None";
 
 /** `TypeId`s for visual items. */
-export type MSVisualItemId = "VisualItem+Text" | "VisualItem+Image" | "VisualItem+Video" | "VisualItem+Clock" | "VisualItem+Timer" | "VisualItem+StageDataText" | "VisualItem+NdiVideoSource";
+export type MSVisualItemId = "VisualItem+Text" | "VisualItem+Image" | "VisualItem+Video" | "VisualItem+Clock" | "VisualItem+Timer" | "VisualItem+StageDataText" | "VisualItem+NdiVideoSource" | "VisualItem+NewsRibbon";
 
 /** `TypeId`s for effects. `ContrastBrighnessAdjustEffect` is not an error. */
 export type MSEffectId = "Effect+CommonEffect" | "Effect+FlipEffect" | "Effect+OutlineEffect" | "Effect+TextEffect" | "Effect+ShadowEffect" | "Effect+SepiaEffect" | "Effect+GrayscaleEffect" | "Effect+BlurEffect" | "Effect+InvertColorsEffect" | "Effect+HueRotateEffect" | "Effect+SaturationAdjustEffect" | "Effect+ContrastBrighnessAdjustEffect" | "Effect+VideoCropEffect" | "Effect+VideoPlayTimesEffect";
