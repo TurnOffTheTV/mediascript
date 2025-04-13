@@ -2,7 +2,7 @@
 
 TypeScript library for interfacing with MediaShout 7 files
 
-This is a work-in-progress, if you find any bugs, post them in the Issues tab.
+This is a work-in-progress, if you find any bugs, post them in the Issues tab. This project can only generate sc7-style files (no packed assets) at the moment.
 
 **This project is not affiliated with MediaShout in any way.**
 
