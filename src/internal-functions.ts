@@ -41,6 +41,20 @@ export function generateNewId(): string{
 }
 
 /**
+ * Convert base64 string to an `ArrayBuffer`.
+ * @param {string} base64 The base64 string to convert.
+ * @returns {ArrayBuffer} An `ArrayBuffer` containing the base64 data.
+ */
+export function base64ToArrayBuffer(base64: string): ArrayBuffer{
+	var dataString = atob(base64);
+	var bytes = new Uint8Array(dataString.length);
+	for (var i=0;i<dataString.length;i++){
+		bytes[i]=dataString.charCodeAt(i);
+	}
+	return bytes.buffer;
+}
+
+/**
  * Convert an `MSIntColor` to an int (LE).
  * @param {MSIntColor} color The `MSIntColor` to convert.
  * @returns {number} An int representing the color.
